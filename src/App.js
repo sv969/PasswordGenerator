@@ -95,7 +95,7 @@ const App = () => {
           <div className="generator__password">
             <h3 >{password}</h3>
             <button className="copy__btn">
-              <i onClick={handleCopyPassword} className="far fa-clipboard"></i>
+              <i onClick={handleCopyPassword} title='copy' className="far fa-clipboard"></i>
             </button>
           </div>
           <div className="form-group">
