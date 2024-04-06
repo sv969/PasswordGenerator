@@ -1,9 +1,13 @@
 import React, { useState } from 'react'
+import { Routes, Route, Link } from 'react-router-dom';
 import "./App.css"
 import { numbers, upperCaseLetters, lowerCaseLetters, specialCharacters } from './Character'
 import { toast, ToastContainer } from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.css';
 import { COPY_Fail, COPY_SUCCESS } from './message';
+
+const Contact = React.lazy(() => import('./pages/contact'));
+const About = React.lazy(() => import('./pages/about'));
 
 const App = () => {
   const [password, setPassword] = useState("")
@@ -87,10 +91,33 @@ const App = () => {
 
   return (
     <div className="App">
+      <div>
+        <Link to="/">Home</Link>
+        <Link to="/about">About</Link>
+      </div>
+      <Routes>
+        <Route
+          index
+          element={
+            <React.Suspense fallback={<>...</>}>
+              <Contact />
+            </React.Suspense>
+          }
+        />
+        <Route
+          path="about"
+          element={
+            <React.Suspense fallback={<>...</>}>
+              <About />
+            </React.Suspense>
+          }
+        />
+        <Route path="*" element={<NoMatch />} />
+      </Routes>
       <div className="container">
         <div className="generator">
           <h2 className="generator__header">
-           Password Generator
+            Password Generator
           </h2>
           <div className="generator__password">
             <h3 >{password}</h3>
@@ -137,5 +164,9 @@ const App = () => {
     </div>
   )
 }
+
+const NoMatch = () => {
+  return <p>There's nothing here: 404!</p>;
+};
 
 export default App
